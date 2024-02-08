@@ -1,4 +1,4 @@
-const Dashboard = require('../models/dashbord')
+const Homescreen = require('../models/homescreen')
 
 exports.createDashboard = async (req, res) => {
     try {
@@ -8,15 +8,15 @@ exports.createDashboard = async (req, res) => {
             throw new Error('please upload an image')
         }
 
-        // console.log(req.file)
+        console.log(req.file)
         const imageURL = req.file.path
 
-        const dashboard = new Dashboard({
+        const dashboard = Homescreen.build({
             image : imageURL,
             image_title
         })
 
-        // console.log(dashboard)
+        console.log(dashboard)
 
         await dashboard.save()
 
@@ -36,7 +36,7 @@ exports.createDashboard = async (req, res) => {
 
 exports.getHomeImage = async (req, res) => {
     try {
-        const dashboard = await Dashboard.find()
+        const dashboard = await Homescreen.find()
 
         console.log(dashboard)
         res.status(200).json({

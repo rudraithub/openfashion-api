@@ -1,15 +1,18 @@
-const mongoose = require('mongoose')
+const { Sequelize } = require('sequelize')
 
-const URL = 'mongodb://127.0.0.1:27017/openfashion'
+const sequelize = new Sequelize(process.env.MYSQL_OP_DB_NAME, process.env.MYSQL_OP_USERNAME, process.env.MYSQL_OP_PASSWORD, {
+  host: process.env.MYSQL_DB_SERVER,
+  dialect: 'mysql',
+  logging: false
+})
 
-const dbconnect = async () => {
-    try {
-        await mongoose.connect(URL)
-
-        console.log('database connection success!')
-    } catch (error) {
-        console.log(`databasw connection error: ${error}`)
-    }
+try {
+  sequelize.authenticate()
+  console.log('Connection has been established successfully.')
+  sequelize.sync()
+  console.log('All models synchronized successfully.')
+} catch (error) {
+  console.error('Unable to connect to the database:', error.message)
 }
 
-dbconnect()
+module.exports = sequelize
