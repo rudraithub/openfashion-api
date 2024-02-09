@@ -1,28 +1,24 @@
-const mongoose = require('mongoose')
+const sequelize = require('../config/dbconnect')
+const { DataTypes } = require('sequelize')
 
-const storeInformationSchema = new mongoose.Schema({
-    email:{
-        type: String,
-        required: true,
-        trim: true
+const StoreInfo = sequelize.define('storeinformation', {
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false
     },
-    phone: {
-        type: String,
-        required: true,
-        trim: true
+    phone:{
+        type: DataTypes.STRING,
+        allowNull: false
     },
-    time: {
-        type: String,
-        required: true,
-        trim: true
+    time:{
+        type: DataTypes.STRING,
+        allowNull: false
     },
     tagLine: {
-        type: String,
-        required: true,
-        trim: true
+        type: DataTypes.STRING,
+        allowNull: false
     }
 })
 
-const StoreInfo = mongoose.model('StoreInformation', storeInformationSchema)
-
 module.exports = StoreInfo
+
