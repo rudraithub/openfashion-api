@@ -4,18 +4,14 @@ exports.addCategory = async(req, res) => {
     try {
         const { category_name } = req.body
         if (!category_name) throw new Error("Please provide a Category Name")
-        let categories = await category.findOne({}, {}, {sort:{ 'categoryID': -1}})
 
-        const id = categories?.categoryID ? categories?.categoryID + 1 : 1
-
-        const categorylist = new category({
-            category_name,
-            categoryID: id
+        const categorylist = category.build({
+            category_name
         })
 
         console.log(categorylist)
 
-        await categorylist.save()
+        // await categorylist.save()
 
         res.status(201).json({status: 201, data: {category_name: categorylist.category_name,categoryID: categorylist.categoryID }, message: 'category add success!'})
 

@@ -6,7 +6,7 @@ exports.addStoreInformation = async (req, res) => {
     try {
         const {email, phone, time, tagLine} = req.body
 
-        const information = new StoreInfo({
+        const information = StoreInfo.build({
             email,
             phone,
             time,
@@ -17,6 +17,7 @@ exports.addStoreInformation = async (req, res) => {
 
         res.status(201).json({
             status: 201,
+            data: information,
             message: 'Store Information Saved'
         })
     } catch (error) {
@@ -38,26 +39,22 @@ exports.getStoreInformation = async (req, res) => {
             })
         }
 
-        const follow = await Follow.find()
-        const product_detail = await ProductDetails.find()
+        const follow = await Follow.findAll()
+        const product_detail = await ProductDetails.findAll()
 
-        // const responceData = {
-        //     email: information.email,
-        //     phone: information.phone,
-        //     time: information.time,
-        //     tagLine: information.tagLine,
-        //     follow,
-        //     product_detail
-        // }
+        const responceData = {
+            email: information.email,
+            phone: information.phone,
+            time: information.time,
+            tagLine: information.tagLine,
+            follow,
+            product_detail
+        }
 
 
         res.status(200).json({
             status: 200,
-            data: {
-                ...information.toObject(),
-                follow,
-                product_detail
-            },
+            data: responceData,
             message: 'store Information!!'
         })
     } catch (error) {

@@ -1,19 +1,16 @@
-const mongoose = require('mongoose')
+const sequelize = require('../config/dbconnect')
+const { DataTypes } = require('sequelize')
 
-const followSchema = new mongoose.Schema({
+const Follow = sequelize.define('follow',{
     image: {
-        type: String,
-        required: true,
-        trim: true
+        type: DataTypes.STRING,
+        allowNull: false
     },
     name: {
-        type: String,
-        required: true,
-        trim: true
+        type: DataTypes.STRING,
+        allowNull: false
     }
-})
+},{timestamps: false})
 
-
-const Follow = mongoose.model('follow', followSchema)
 
 module.exports = Follow

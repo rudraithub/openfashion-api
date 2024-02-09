@@ -1,18 +1,15 @@
-const mongoose = require('mongoose')
+const sequelize = require('../config/dbconnect')
+const { DataTypes } = require('sequelize')
 
-const productDetailsSchema = new mongoose.Schema({
+const ProductDetails = sequelize.define('product_details', {
     image: {
-        type: String,
-        required: true,
-        trim: true
+        type: DataTypes.STRING,
+        allowNull: false
     },
     title: {
-        type: String,
-        required: true,
-        trim: true
+        type: DataTypes.STRING,
+        allowNull: false
     }
-})
-
-const ProductDetails = mongoose.model('ProductDetails', productDetailsSchema)
+},{timestamps: false})
 
 module.exports = ProductDetails
