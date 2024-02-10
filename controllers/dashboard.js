@@ -36,7 +36,7 @@ exports.createDashboard = async (req, res) => {
 
 exports.getHomeImage = async (req, res) => {
     try {
-        const dashboard = await Homescreen.find()
+        const dashboard = await Homescreen.findAll()
 
         console.log(dashboard)
         res.status(200).json({

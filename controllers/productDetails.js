@@ -12,7 +12,7 @@ exports.addProductDetails = async (req, res) => {
         console.log(req.file)
         const imageURL = req.file.path
 
-        const follow = new ProductDetails({
+        const follow = ProductDetails.build({
             image: imageURL,
             title
         })

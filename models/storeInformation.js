@@ -18,7 +18,7 @@ const StoreInfo = sequelize.define('storeinformation', {
         type: DataTypes.STRING,
         allowNull: false
     }
-})
+},{timestamps: false})
 
 module.exports = StoreInfo
 

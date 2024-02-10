@@ -12,7 +12,7 @@ exports.addFollow = async (req, res) => {
         console.log(req.file)
         const imageURL = req.file.path
 
-        const follow = new Follow({
+        const follow = Follow.build({
             image: imageURL,
             name
         })
