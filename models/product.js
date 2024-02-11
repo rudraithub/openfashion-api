@@ -1,35 +1,32 @@
-const mongoose = require('mongoose')
+const sequelize = require('../config/dbconnect')
 
-const productSchema = new mongoose.Schema({
+const {DataTypes} = require('sequelize')
+const category = require('./categories')
+
+const Product = sequelize.define('products', {
     display_image: {
-        type: String,
-        required: true,
-        trim: true
+        type: DataTypes.STRING,
+        allowNull: false
     },
     product_name:{
-        type: String,
-        required: true,
-        trim: true
+        type: DataTypes.STRING,
+        allowNull: false
     },
     product_detail:{
-        type: String,
-        required: true,
-        trim: true
+        type: DataTypes.STRING,
+        allowNull: false
     },
     product_price: {
-        type: String,
-        required: true,
-        trim: true
+        type: DataTypes.STRING,
+        allowNull: false
     },
     product_discount: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    product_image: [String]
-})
+        type: DataTypes.STRING,
+        allowNull: false
+    }
+}, {timestamps: false})
 
-
-const Product = mongoose.model('product', productSchema)
+category.hasMany(Product, {foreignKey: 'categoryID', as: 'product_detail', onDelete: 'CASCADE', onUpdate:'CASCADE'})
+Product.belongsTo(category, {foreignKey: 'categoryID', onDelete: 'CASCADE', onUpdate:'CASCADE'})
 
 module.exports = Product
