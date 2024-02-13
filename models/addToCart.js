@@ -10,8 +10,12 @@ const AddToCart = sequelize.define('addTocart', {
     quantity: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },
+    product_price: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
-})
+},{timestamps: false})
 
 
 module.exports = AddToCart
