@@ -1,5 +1,6 @@
 const AddShippingAddress = require('../models/addShippingAddress')
 const authToken = require('../utils/generateAuth')
+const { validMobileNumber } = require('../utils/validation')
 
 exports.addShippingAddress = async( req, res) => {
     try {
@@ -14,6 +15,8 @@ exports.addShippingAddress = async( req, res) => {
             })
         }
 
+        // const number = validMobileNumber(mobileNumber)
+
         const user = await AddShippingAddress.create({
             firstName,
             lastName,
@@ -21,16 +24,17 @@ exports.addShippingAddress = async( req, res) => {
             city,
             state,
             zip_code,
-            mobileNumber
+            mobileNumber: validMobileNumber(mobileNumber)
         })
 
         console.log(user.toJSON())
 
-        const token = await authToken(user.orderID)
+        const token = await authToken(user.userID)
         user.token = token
         await user.save()
 
         const userInfo = {
+            userID: user.userID,
             firstName: user.firstName,
             lastName: user.lastName,
             address: user.address,

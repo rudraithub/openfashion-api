@@ -3,7 +3,7 @@ const sequelize = require('../config/dbconnect')
 const {DataTypes} = require('sequelize')
 
 const AddShippingAddress = sequelize.define('shippingAddress', {
-    orderID : {
+    userID : {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
