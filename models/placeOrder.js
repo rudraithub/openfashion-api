@@ -3,7 +3,7 @@ const sequelize = require("../config/dbconnect");
 const { DataTypes } = require('sequelize')
 
 const PlaceOrder = sequelize.define('placeOrder', {
-    orderID: {
+    userID: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
@@ -13,6 +13,14 @@ const PlaceOrder = sequelize.define('placeOrder', {
     },
     quantity: {
         type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    total_product_price:{
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    total_price: {
+        type: DataTypes.STRING,
         allowNull: false
     },
     shipping_address: {

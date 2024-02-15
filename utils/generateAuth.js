@@ -1,13 +1,13 @@
 const jwt = require('jsonwebtoken')
 const AddShippingAddress = require('../models/addShippingAddress')
 
-const authToken = async (orderID) => {
+const authToken = async (userID) => {
   try {
-    const user = await AddShippingAddress.findOne({ where: { orderID } })
+    const user = await AddShippingAddress.findOne({ where: { userID } })
     if (!user) {
       throw new Error('You are not register yet, please signup!')
     }
-    const token = jwt.sign({ id : user.orderID }, 'rudraIthubfotquizbook')
+    const token = jwt.sign({ id : user.userID }, 'rudraIthubfotquizbook')
     // user.tokens = user.tokens.concat({ token })
     // user.token = token
 

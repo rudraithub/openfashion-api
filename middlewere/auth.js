@@ -9,7 +9,7 @@ const auth = async (req, res, next) => {
     const decode = jwt.verify(token, 'rudraIthubfotquizbook')
     // console.log(decode)
     // const user = await User.findOne({ _id: decode.id, 'tokens.token': token })
-    const user = await AddShippingAddress.findOne({ where: { orderID: decode.id, token: token } })
+    const user = await AddShippingAddress.findOne({ where: { userID: decode.id, token: token } })
 
     if (!user || !user.token) {
       return res.status(400).json({
