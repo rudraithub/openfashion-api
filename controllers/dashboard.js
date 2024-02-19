@@ -1,4 +1,5 @@
 const Homescreen = require('../models/homescreen')
+const { isEmpty } = require('../utils/checkEmptyValue')
 
 exports.createDashboard = async (req, res) => {
     try {
@@ -10,6 +11,13 @@ exports.createDashboard = async (req, res) => {
 
         console.log(req.file)
         const imageURL = req.file.path
+
+        //check image_title is not empty
+        isEmpty(image_title, 'image_title')
+        
+        // if(image_title === '' || null || undefined){
+        //     throw new Error('image title is required!')
+        // }
 
         const dashboard = Homescreen.build({
             image : imageURL,

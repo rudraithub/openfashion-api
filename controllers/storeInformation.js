@@ -1,14 +1,23 @@
 const Follow = require('../models/follow')
 const ProductDetails = require('../models/productDetails')
 const StoreInfo = require('../models/storeInformation')
+const { validMobileNumber } = require('../utils/validation')
 
 exports.addStoreInformation = async (req, res) => {
     try {
         const {email, phone, time, tagLine} = req.body
 
+        const isData = await StoreInfo.findOne({where: {email, phone}})
+
+        if(isData){
+            throw new Error('information already stored!')
+        }
+
+        const isMob = validMobileNumber(phone)
+
         const information = StoreInfo.build({
             email,
-            phone,
+            phone:isMob,
             time,
             tagLine
         })

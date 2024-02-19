@@ -1,4 +1,5 @@
 const Follow = require('../models/follow')
+const { isEmpty } = require('../utils/checkEmptyValue')
 
 
 exports.addFollow = async (req, res) => {
@@ -8,6 +9,8 @@ exports.addFollow = async (req, res) => {
         if (!req.file) {
             throw new Error('please upload an image')
         }
+
+        isEmpty(name, 'name')
 
         console.log(req.file)
         const imageURL = req.file.path

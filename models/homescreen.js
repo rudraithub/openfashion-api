@@ -9,7 +9,7 @@ const Homescreen = sequelize.define('homescreen', {
     },
     image_title: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: false
     }
 },{timestamps: false})
 
