@@ -1,4 +1,5 @@
 const AddShippingAddress = require('../models/addShippingAddress')
+const { isEmpty } = require('../utils/checkEmptyValue')
 const authToken = require('../utils/generateAuth')
 const { validMobileNumber } = require('../utils/validation')
 
@@ -15,6 +16,13 @@ exports.addShippingAddress = async( req, res) => {
             })
         }
 
+        isEmpty(firstName, 'firstName')
+        isEmpty(lastName, 'lastName')
+        isEmpty(address, 'address')
+        isEmpty(city, 'city')
+        isEmpty(state, 'state')
+        isEmpty(zip_code, 'zip_code')
+
         // const number = validMobileNumber(mobileNumber)
 
         const user = await AddShippingAddress.create({
@@ -27,7 +35,7 @@ exports.addShippingAddress = async( req, res) => {
             mobileNumber: validMobileNumber(mobileNumber)
         })
 
-        console.log(user.toJSON())
+        // console.log(user.toJSON())
 
         const token = await authToken(user.userID)
         user.token = token
@@ -51,9 +59,6 @@ exports.addShippingAddress = async( req, res) => {
             message: 'Registration Successfully!'
         })
     } catch (error) {
-        res.status(400).json({
-            status: 400,
-            message: error.message
-        })
+        next(error)
     }
 }

@@ -1,8 +1,9 @@
 const Product = require('../models/product')
 const category = require('../models/categories')
 const ProductImage = require('../models/productImages')
+const { isEmpty } = require('../utils/checkEmptyValue')
 
-exports.addProducts = async (req, res) => {
+exports.addProducts = async (req, res, next) => {
     try {
 
         if(!req.file){
@@ -20,7 +21,12 @@ exports.addProducts = async (req, res) => {
             })
         }
 
-        console.log(req.file)
+        isEmpty(product_name, 'product_name')
+        isEmpty(product_detail, 'product_detail')
+        isEmpty(product_price, 'product_price')
+        isEmpty(product_discount, 'product_discount')
+
+        // console.log(req.file)
         const image = req.file.path
         // console.log(req.files)
 
@@ -42,16 +48,13 @@ exports.addProducts = async (req, res) => {
         })
 
     } catch (error) {
-        res.status(400).json({
-            status: 400,
-            message: error.message
-        })
+        next(error)
     }
 }
 
-exports.addImagetoProduct = async (req, res) => {
+exports.addImagetoProduct = async (req, res, next) => {
     try {
-        if(!req.files){
+        if(!req.files || req.files.length === 0){
             throw new Error('please uplaod an images')
         }
 
@@ -59,12 +62,12 @@ exports.addImagetoProduct = async (req, res) => {
 
         const product = await Product.findOne({where : {id: productID}})
         if(!product){
-            throw new Error(' product is not found!')
+            throw new Error('product is not found!')
         }
 
-        console.log(req.files)
+        // console.log(req.files)
         const images = req.files.map(file => file.path)
-        console.log(images)
+        // console.log(images)
         const productImages = images.map(image => ({
             productID,
             product_image: image
@@ -80,6 +83,6 @@ exports.addImagetoProduct = async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error.message)
-    }
+        next(error)
+    }    
 }

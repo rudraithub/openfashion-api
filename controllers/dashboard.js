@@ -1,7 +1,7 @@
 const Homescreen = require('../models/homescreen')
 const { isEmpty } = require('../utils/checkEmptyValue')
 
-exports.createDashboard = async (req, res) => {
+exports.createDashboard = async (req, res, next) => {
     try {
         const { image_title } = req.body
 
@@ -9,12 +9,12 @@ exports.createDashboard = async (req, res) => {
             throw new Error('please upload an image')
         }
 
-        console.log(req.file)
+        // console.log(req.file)
         const imageURL = req.file.path
 
         //check image_title is not empty
         isEmpty(image_title, 'image_title')
-        
+
         // if(image_title === '' || null || undefined){
         //     throw new Error('image title is required!')
         // }
@@ -24,7 +24,7 @@ exports.createDashboard = async (req, res) => {
             image_title
         })
 
-        console.log(dashboard)
+        // console.log(dashboard)
 
         await dashboard.save()
 
@@ -35,10 +35,7 @@ exports.createDashboard = async (req, res) => {
         })
 
     } catch (error) {
-        res.status(404).json({
-            status: 404,
-            message: error.message
-        })
+       next(error)
     }
 }
 
@@ -53,10 +50,6 @@ exports.getHomeImage = async (req, res) => {
             message: "get all banner image successfully!"
         })
     } catch (error) {
-        console.log(error.message)
-        res.status(400).json({
-            status: 400,
-            message: error.message
-        })
+       next(error)
     }
 }

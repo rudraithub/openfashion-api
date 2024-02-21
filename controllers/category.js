@@ -1,7 +1,7 @@
 const category = require('../models/categories')
 const Product = require('../models/product')
 const ProductImage = require('../models/productImages')
-exports.addCategory = async (req, res) => {
+exports.addCategory = async (req, res, next) => {
     try {
         const { category_name } = req.body
         if (!category_name) throw new Error("Please provide a Category Name")
@@ -10,21 +10,18 @@ exports.addCategory = async (req, res) => {
             category_name
         })
 
-        console.log(categorylist)
+        // console.log(categorylist)
 
         await categorylist.save()
 
         res.status(201).json({ status: 201, data: { category_name: categorylist.category_name, categoryID: categorylist.categoryID }, message: 'category add success!' })
 
     } catch (error) {
-        res.status.json({
-            status: 400,
-            message: error.message
-        })
+        next(error)
     }
 }
 
-exports.allCategory = async (req, res) => {
+exports.allCategory = async (req, res, next) => {
     try {
         const categoryID = req.query.categoryID
         let categoryData
@@ -67,9 +64,6 @@ exports.allCategory = async (req, res) => {
         })
 
     } catch (error) {
-        res.status(400).json({
-            status: 400,
-            message: error.message
-        })
+        next(error)
     }
 }

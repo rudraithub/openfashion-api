@@ -23,6 +23,15 @@ app.use(addToCartRouter)
 app.use(shippingRouter)
 app.use(orderRouter)
 
+app.use((error, req, res, next) => {
+    error.statusCode = error.statusCode || 400;
+    error.status = error.status || "Error";
+    res.status(error.statusCode).json({
+        status: error.statusCode,
+        message: error.message,
+    });
+});
+
 app.listen(PORT, () => {
     console.log(`server runnining on port ${PORT}`)
 })

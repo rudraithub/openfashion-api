@@ -1,7 +1,8 @@
 const ProductDetails = require('../models/productDetails')
+const { isEmpty } = require('../utils/checkEmptyValue')
 
 
-exports.addProductDetails = async (req, res) => {
+exports.addProductDetails = async (req, res, next) => {
     try {
         const title = req.body.title
 
@@ -9,8 +10,10 @@ exports.addProductDetails = async (req, res) => {
             throw new Error('please upload an image')
         }
 
-        console.log(req.file)
+        // console.log(req.file)
         const imageURL = req.file.path
+
+        isEmpty(title, 'title')
 
         const follow = ProductDetails.build({
             image: imageURL,
@@ -24,9 +27,6 @@ exports.addProductDetails = async (req, res) => {
             message: "success!"
         })
     } catch (error) {
-        res.status(400).json({
-            status: 400,
-            message: error.message
-        })
+        next(error)
     }
 }

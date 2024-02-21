@@ -1,8 +1,7 @@
 const Follow = require('../models/follow')
 const { isEmpty } = require('../utils/checkEmptyValue')
 
-
-exports.addFollow = async (req, res) => {
+exports.addFollow = async (req, res, next) => {
     try {
         const name = req.body.name
 
@@ -27,9 +26,6 @@ exports.addFollow = async (req, res) => {
             message: "success!"
         })
     } catch (error) {
-        res.status(400).json({
-            status: 400,
-            message: error.message
-        })
+        next(error)
     }
 }
