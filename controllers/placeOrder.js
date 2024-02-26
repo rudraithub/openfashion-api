@@ -86,6 +86,7 @@ exports.placeOrder = async (req, res) => {
 
         for (const product of products) {
             const { productID, quantity, total_product_price } = product;
+            isEmpty(total_product_price, 'total_product_price')
             const isProduct = await Product.findOne({ where: { id: productID } });
 
             if (!isProduct) {
