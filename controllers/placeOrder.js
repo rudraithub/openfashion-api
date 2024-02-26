@@ -62,10 +62,13 @@
 const AddShippingAddress = require("../models/addShippingAddress");
 const PlaceOrder = require("../models/placeOrder");
 const Product = require("../models/product");
+const { isEmpty } = require("../utils/checkEmptyValue");
 
 exports.placeOrder = async (req, res) => {
     try {
         const { total_price, shipping_address, shipping_method, payment_method,products } = req.body;
+        isEmpty(total_price, 'total price')
+        isEmpty(shipping_address, 'shipping_address')
         const userID = req.user.userID;
         const user = await AddShippingAddress.findOne({ where: { userID } });
 
@@ -76,7 +79,7 @@ exports.placeOrder = async (req, res) => {
             });
         }
 
-        console.log(user.toJSON())
+        // console.log(user.toJSON())
 
         const bookOrders = [];
         let newOrder

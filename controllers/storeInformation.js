@@ -1,14 +1,23 @@
 const Follow = require('../models/follow')
 const ProductDetails = require('../models/productDetails')
 const StoreInfo = require('../models/storeInformation')
+const { validMobileNumber } = require('../utils/validation')
 
-exports.addStoreInformation = async (req, res) => {
+exports.addStoreInformation = async (req, res, next) => {
     try {
         const {email, phone, time, tagLine} = req.body
 
+        const isData = await StoreInfo.findOne({where: {email, phone}})
+
+        if(isData){
+            throw new Error('information already stored!')
+        }
+
+        const isMob = validMobileNumber(phone)
+
         const information = StoreInfo.build({
             email,
-            phone,
+            phone:isMob,
             time,
             tagLine
         })
@@ -21,15 +30,12 @@ exports.addStoreInformation = async (req, res) => {
             message: 'Store Information Saved'
         })
     } catch (error) {
-        res.status(400).json({
-            status: 400,
-            message: error.message
-        })
+       next(error)
     }
 }
 
 
-exports.getStoreInformation = async (req, res) => {
+exports.getStoreInformation = async (req, res, next) => {
     try {
         const information = await StoreInfo.findOne({})
         if(!information){
@@ -58,9 +64,6 @@ exports.getStoreInformation = async (req, res) => {
             message: 'store Information!!'
         })
     } catch (error) {
-        res.status(404).json({
-            status: 404,
-            message: error.message
-        })
+        next(error)
     }
 }

@@ -1,13 +1,15 @@
 const Follow = require('../models/follow')
+const { isEmpty } = require('../utils/checkEmptyValue')
 
-
-exports.addFollow = async (req, res) => {
+exports.addFollow = async (req, res, next) => {
     try {
         const name = req.body.name
 
         if (!req.file) {
             throw new Error('please upload an image')
         }
+
+        isEmpty(name, 'name')
 
         console.log(req.file)
         const imageURL = req.file.path
@@ -24,9 +26,6 @@ exports.addFollow = async (req, res) => {
             message: "success!"
         })
     } catch (error) {
-        res.status(400).json({
-            status: 400,
-            message: error.message
-        })
+        next(error)
     }
 }
