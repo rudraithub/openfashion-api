@@ -39,11 +39,11 @@ exports.createDashboard = async (req, res, next) => {
     }
 }
 
-exports.getHomeImage = async (req, res) => {
+exports.getHomeImage = async (req, res, next) => {
     try {
         const dashboard = await Homescreen.findAll()
 
-        if(!dashboard){
+        if(dashboard.length === 0){
             throw new Error('There is no Data Available!')
         }
 

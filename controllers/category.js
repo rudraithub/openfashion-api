@@ -55,7 +55,7 @@ exports.allCategory = async (req, res, next) => {
         }
 
 
-        if (!categoryData) throw new Error("there is no category")
+        if (!categoryData.length) throw new Error("there is no category")
 
         res.status(200).json({
             status: 200,
