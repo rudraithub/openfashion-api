@@ -43,6 +43,10 @@ exports.getHomeImage = async (req, res) => {
     try {
         const dashboard = await Homescreen.findAll()
 
+        if(!dashboard){
+            throw new Error('There is no Data Available!')
+        }
+
         console.log(dashboard)
         res.status(200).json({
             status: 200,
