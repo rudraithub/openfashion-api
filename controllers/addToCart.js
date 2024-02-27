@@ -2,7 +2,7 @@ const AddToCart = require("../models/addToCart")
 const Product = require("../models/product")
 const sequelize = require('../config/dbconnect')
 
-exports.addToCart = async (req, res) => {
+exports.addToCart = async (req, res, next) => {
     try {
         let cartItem
         const { productID, quantity } = req.body
@@ -65,15 +65,12 @@ exports.addToCart = async (req, res) => {
             message: 'cart item added successfully!'
         })
     } catch (error) {
-        res.status(400).json({
-            status: 400,
-            message: error.message
-        })
+       next(error)
     }
 }
 
 
-exports.removeFromAddToCart = async (req, res) => {
+exports.removeFromAddToCart = async (req, res, next) => {
     try {
         const {productID} = req.body 
 
@@ -85,9 +82,6 @@ exports.removeFromAddToCart = async (req, res) => {
             message: 'cartItem remove successfully!'
         })
     } catch (error) {
-        res.status(400).json({
-            status: 400,
-            message: error.message
-        })
+       next(error)
     }
 }

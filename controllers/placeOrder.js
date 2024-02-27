@@ -64,7 +64,7 @@ const PlaceOrder = require("../models/placeOrder");
 const Product = require("../models/product");
 const { isEmpty } = require("../utils/checkEmptyValue");
 
-exports.placeOrder = async (req, res) => {
+exports.placeOrder = async (req, res, next) => {
     try {
         const { total_price, shipping_address, shipping_method, payment_method,products } = req.body;
         isEmpty(total_price, 'total price')
@@ -134,9 +134,6 @@ exports.placeOrder = async (req, res) => {
             message: 'Your orders are complete, deliver as soon as possible!'
         });
     } catch (error) {
-        res.status(400).json({
-            status: 400,
-            message: error.message
-        });
+       next(error)
     }
 };
