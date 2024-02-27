@@ -3,7 +3,7 @@ const { isEmpty } = require('../utils/checkEmptyValue')
 const authToken = require('../utils/generateAuth')
 const { validMobileNumber } = require('../utils/validation')
 
-exports.addShippingAddress = async( req, res) => {
+exports.addShippingAddress = async(req, res, next) => {
     try {
         const {firstName, lastName, address, city, state, zip_code, mobileNumber} = req.body
 
