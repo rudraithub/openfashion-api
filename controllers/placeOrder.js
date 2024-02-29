@@ -67,7 +67,7 @@ const { isEmpty } = require("../utils/checkEmptyValue");
 exports.placeOrder = async (req, res, next) => {
     try {
         const { total_price, shipping_address, shipping_method, payment_method,products } = req.body;
-        isEmpty(total_price, 'total price')
+        // isEmpty(total_price, 'total price')
         isEmpty(shipping_address, 'shipping_address')
         const userID = req.user.userID;
         const user = await AddShippingAddress.findOne({ where: { userID } });
@@ -86,7 +86,11 @@ exports.placeOrder = async (req, res, next) => {
 
         for (const product of products) {
             const { productID, quantity, total_product_price } = product;
-            isEmpty(total_product_price, 'total_product_price')
+            // isEmpty(total_product_price, 'total_product_price')
+            if(typeof quantity !== 'number' || typeof total_price !== 'number' || typeof total_product_price !== 'number'){
+                throw new Error('please provide valid value!')
+            }
+
             const isProduct = await Product.findOne({ where: { id: productID } });
 
             if (!isProduct) {
@@ -99,15 +103,15 @@ exports.placeOrder = async (req, res, next) => {
             newOrder = await PlaceOrder.create({
                 userID: user.userID,
                 productID,
-                quantity,
-                total_product_price,
-                total_price,
+                quantity: parseInt(quantity),
+                total_product_price: parseInt(total_product_price),
+                total_price: parseInt(total_price),
                 shipping_address: shipping_address || user.address,
                 shipping_method,
                 payment_method
             });
 
-            console.log(newOrder.toJSON())
+            // console.log(newOrder.toJSON())
 
             bookOrders.push({
                 productID: newOrder.productID,
@@ -116,7 +120,7 @@ exports.placeOrder = async (req, res, next) => {
             });
         }
 
-        console.log(bookOrders);
+        // console.log(bookOrders);
 
         const responseData = {
             userID: newOrder.userID,
@@ -126,7 +130,7 @@ exports.placeOrder = async (req, res, next) => {
             payment_method: newOrder.payment_method,
             total_price: newOrder.total_price
         }
-        console.log(responseData)
+        // console.log(responseData)
 
         res.status(200).json({
             status: 200,

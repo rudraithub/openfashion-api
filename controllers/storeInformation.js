@@ -1,7 +1,7 @@
 const Follow = require('../models/follow')
 const ProductDetails = require('../models/productDetails')
 const StoreInfo = require('../models/storeInformation')
-const { validMobileNumber } = require('../utils/validation')
+const { validMobileNumber , isEmailValid} = require('../utils/validation')
 
 exports.addStoreInformation = async (req, res, next) => {
     try {
@@ -16,7 +16,7 @@ exports.addStoreInformation = async (req, res, next) => {
         const isMob = validMobileNumber(phone)
 
         const information = StoreInfo.build({
-            email,
+            email: isEmailValid(email),
             phone:isMob,
             time,
             tagLine
@@ -24,8 +24,8 @@ exports.addStoreInformation = async (req, res, next) => {
 
         await information.save()
 
-        res.status(201).json({
-            status: 201,
+        res.status(200).json({
+            status: 200,
             data: information,
             message: 'Store Information Saved'
         })

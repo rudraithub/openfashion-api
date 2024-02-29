@@ -29,13 +29,16 @@ exports.addProducts = async (req, res, next) => {
         // console.log(req.file)
         const image = req.file.path
         // console.log(req.files)
+        if(isNaN(product_discount) && isNaN(product_price)){
+            throw new Error('product price and product discount must be Number')
+        }
 
         const productData = Product.build({
             display_image: image,
             product_name,
             product_detail,
-            product_discount,
-            product_price,
+            product_discount: parseInt(product_discount),
+            product_price: parseInt(product_price),
             categoryID,
         })
 
@@ -75,7 +78,7 @@ exports.addImagetoProduct = async (req, res, next) => {
 
         const productAllImage = await ProductImage.bulkCreate(productImages)
 
-        console.log(productAllImage)
+        // console.log(productAllImage)
         res.status(200).json({
             status: 200,
             data: productAllImage,

@@ -1,6 +1,7 @@
 const AddShippingAddress = require('../models/addShippingAddress')
 const { isEmpty } = require('../utils/checkEmptyValue')
 const authToken = require('../utils/generateAuth')
+const {isString, isAlphabetic} = require('../utils/isString')
 const { validMobileNumber } = require('../utils/validation')
 
 exports.addShippingAddress = async(req, res, next) => {
@@ -22,6 +23,9 @@ exports.addShippingAddress = async(req, res, next) => {
         isEmpty(city, 'city')
         isEmpty(state, 'state')
         isEmpty(zip_code, 'zip_code')
+
+        isString(firstName,lastName, address, city, state)
+        isAlphabetic(firstName,lastName,city, state)
 
         // const number = validMobileNumber(mobileNumber)
 

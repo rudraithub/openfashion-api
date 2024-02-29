@@ -14,7 +14,7 @@ exports.addCategory = async (req, res, next) => {
 
         await categorylist.save()
 
-        res.status(201).json({ status: 201, data: { category_name: categorylist.category_name, categoryID: categorylist.categoryID }, message: 'category add success!' })
+        res.status(200).json({ status: 200, data: { category_name: categorylist.category_name, categoryID: categorylist.categoryID }, message: 'category add success!' })
 
     } catch (error) {
         next(error)

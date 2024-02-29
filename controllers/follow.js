@@ -11,7 +11,7 @@ exports.addFollow = async (req, res, next) => {
 
         isEmpty(name, 'name')
 
-        console.log(req.file)
+        // console.log(req.file)
         const imageURL = req.file.path
 
         const follow = Follow.build({
@@ -20,8 +20,8 @@ exports.addFollow = async (req, res, next) => {
         })
 
         await follow.save()
-        res.status(201).json({
-            status: 201,
+        res.status(200).json({
+            status: 200,
             data: follow,
             message: "success!"
         })

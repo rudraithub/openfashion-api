@@ -6,3 +6,9 @@ exports.validMobileNumber = (number) => {
     }
     return number
 }
+
+exports.isEmailValid = (email) => {
+    if(!validator.isEmail(email)){
+        throw new Error ('please provide valid email')
+    }
+}

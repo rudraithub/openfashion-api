@@ -28,8 +28,8 @@ exports.createDashboard = async (req, res, next) => {
 
         await dashboard.save()
 
-        res.status(201).json({
-            status: 201,
+        res.status(200).json({
+            status: 200,
             data: dashboard,
             message: 'Dashboard created successfully!'
         })
@@ -47,7 +47,7 @@ exports.getHomeImage = async (req, res, next) => {
             throw new Error('There is no Data Available!')
         }
 
-        console.log(dashboard)
+        // console.log(dashboard)
         res.status(200).json({
             status: 200,
             data: dashboard,
