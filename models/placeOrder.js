@@ -16,11 +16,11 @@ const PlaceOrder = sequelize.define('placeOrder', {
         allowNull: false
     },
     total_product_price:{
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     total_price: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     shipping_address: {
