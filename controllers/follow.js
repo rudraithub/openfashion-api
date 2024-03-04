@@ -11,6 +11,10 @@ exports.addFollow = async (req, res, next) => {
 
         isEmpty(name, 'name')
 
+        if(!isNaN(name) || name.match(/\d/)){
+            throw new Error ('name should be a character')
+        }
+
         // console.log(req.file)
         const imageURL = req.file.path
 

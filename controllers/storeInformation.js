@@ -13,10 +13,12 @@ exports.addStoreInformation = async (req, res, next) => {
             throw new Error('information already stored!')
         }
 
+        isEmailValid(email)
+
         const isMob = validMobileNumber(phone)
 
         const information = StoreInfo.build({
-            email: isEmailValid(email),
+            email,
             phone:isMob,
             time,
             tagLine

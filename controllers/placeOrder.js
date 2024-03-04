@@ -87,10 +87,22 @@ exports.placeOrder = async (req, res, next) => {
         for (const product of products) {
             const { productID, quantity, total_product_price } = product;
             // isEmpty(total_product_price, 'total_product_price')
-            if(typeof quantity !== 'number' || typeof total_price !== 'number' || typeof total_product_price !== 'number'){
-                throw new Error('please provide valid value!')
+            const invalidFields = [];
+            if (typeof quantity !== 'number') {
+                invalidFields.push('quantity');
             }
-
+            if (typeof total_price !== 'number') {
+                invalidFields.push('total_price');
+            }
+            if (typeof total_product_price !== 'number') {
+                invalidFields.push('total_product_price');
+            }
+            
+            if (invalidFields.length > 0) {
+                const invalidFieldNames = invalidFields.join(', ');
+                throw new Error(`Please provide valid values for: ${invalidFieldNames}`);
+            }
+            
             const isProduct = await Product.findOne({ where: { id: productID } });
 
             if (!isProduct) {

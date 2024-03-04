@@ -14,6 +14,9 @@ exports.createDashboard = async (req, res, next) => {
 
         //check image_title is not empty
         isEmpty(image_title, 'image_title')
+        if(!isNaN(image_title) || image_title.match(/\d/)){
+            throw new Error ('Image title should be a character')
+        }
 
         // if(image_title === '' || null || undefined){
         //     throw new Error('image title is required!')
