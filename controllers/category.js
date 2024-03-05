@@ -5,6 +5,8 @@ exports.addCategory = async (req, res, next) => {
     try {
         const { category_name } = req.body
         if (!category_name) throw new Error("Please provide a Category Name")
+        
+        if(!isNaN(category_name)) throw new Error('category name should be character')
 
         const categorylist = category.build({
             category_name

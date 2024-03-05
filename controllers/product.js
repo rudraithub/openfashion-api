@@ -2,6 +2,7 @@ const Product = require('../models/product')
 const category = require('../models/categories')
 const ProductImage = require('../models/productImages')
 const { isEmpty } = require('../utils/checkEmptyValue')
+const { isString } = require('../utils/isString')
 
 exports.addProducts = async (req, res, next) => {
     try {
@@ -25,6 +26,10 @@ exports.addProducts = async (req, res, next) => {
         isEmpty(product_detail, 'product_detail')
         isEmpty(product_price, 'product_price')
         isEmpty(product_discount, 'product_discount')
+
+        if(!isNaN(product_name) || product_name.match(/\d/)){
+            throw new Error ('Product Name should be a character')
+        }
 
         // console.log(req.file)
         const image = req.file.path
