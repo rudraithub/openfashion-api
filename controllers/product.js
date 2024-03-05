@@ -29,7 +29,7 @@ exports.addProducts = async (req, res, next) => {
         // console.log(req.file)
         const image = req.file.path
         // console.log(req.files)
-        if(isNaN(product_discount) && isNaN(product_price)){
+        if(isNaN(product_discount) || isNaN(product_price)){
             throw new Error('product price and product discount must be Number')
         }
 

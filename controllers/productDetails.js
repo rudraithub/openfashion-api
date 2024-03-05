@@ -15,6 +15,10 @@ exports.addProductDetails = async (req, res, next) => {
 
         isEmpty(title, 'title')
 
+        if(!isNaN(title)){
+            throw new Error ('Title should be a character')
+        }
+
         const follow = ProductDetails.build({
             image: imageURL,
             title
