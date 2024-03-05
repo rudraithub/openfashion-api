@@ -13,6 +13,9 @@ exports.addStoreInformation = async (req, res, next) => {
             throw new Error('information already stored!')
         }
 
+        if(!isNaN(time)) throw new Error('time should be character')
+        if(!isNaN(tagLine)) throw new Error('tag line should be character')
+
         isEmailValid(email)
 
         const isMob = validMobileNumber(phone)
