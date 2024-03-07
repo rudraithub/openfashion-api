@@ -41,15 +41,16 @@ exports.allCategory = async (req, res, next) => {
                 }]
             })
 
-            categoryData = categoryData.filter(category => {
-                return category.product_detail.length > 0;
-            }); 
-
             // Filter products with images for each category
             categoryData = categoryData.map(category => ({
                 ...category.toJSON(),
                 product_detail: category.product_detail.filter(prod => prod.product_images.length > 0)
             }))
+            
+            categoryData = categoryData.filter(category => {
+                return category.product_detail.length > 0;
+            }); 
+
 
             if(!categoryData.length) throw new Error('there is no category')
 
