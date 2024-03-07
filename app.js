@@ -8,10 +8,12 @@ const addToCartRouter = require('./routers/addToCart')
 const shippingRouter = require('./routers/addShippingAddress')
 const orderRouter = require('./routers/placeOrder')
 const app = express()
+const cors = require('cors')
 require('./config/dbconnect')
 
 const PORT = process.env.PORT || 3000
 
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
