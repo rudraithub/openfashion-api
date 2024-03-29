@@ -17,6 +17,13 @@ exports.addShippingAddress = async(req, res, next) => {
             })
         }
 
+        let zip_codeStr = zip_code.toString()
+        // console.log(zip_codeStr)
+
+        if(zip_codeStr.length !== 4){
+            throw new Error('Please Provide 4 Digit Zip code!')
+        }
+
         isEmpty(firstName, 'firstName')
         isEmpty(lastName, 'lastName')
         isEmpty(address, 'address')
